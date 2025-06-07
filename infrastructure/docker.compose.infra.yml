@@ -6,8 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: jobconnect
-      MYSQL_USER: jobuser
-      MYSQL_PASSWORD: jobpassword
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userp 
     ports:
       - "3306:3306"
     volumes:

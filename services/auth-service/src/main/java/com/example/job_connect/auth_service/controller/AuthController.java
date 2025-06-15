@@ -27,22 +27,22 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     	System.out.println("User registration implemented");
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
     }
 
-
-
 	@PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User request) {
-        User user = userRepository.findByUsername(request.getName())
+		System.out.println(request.getUsername() + " " + request.getPassword());
+        User user = userRepository.findByUsername(request.getUsername())
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            String token = JwtUtility.generateToken(user.getName());
-            return ResponseEntity.ok(token);
+            String token = JwtUtility.generateToken(user.getUsername());
+            return ResponseEntity.ok(user.getRole());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }

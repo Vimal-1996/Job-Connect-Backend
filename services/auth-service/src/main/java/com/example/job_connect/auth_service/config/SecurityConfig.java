@@ -24,11 +24,11 @@ public class SecurityConfig {
 	@Autowired
 	private UserRepository userRepository;
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // CSRF disabling in new syntax
         .authorizeHttpRequests(auth -> auth
-        		.requestMatchers("*").permitAll()
-            //.requestMatchers("/auth/register", "/auth/login").permitAll()
+        		
+            .requestMatchers("/auth/register", "/auth/login").permitAll()
             .anyRequest().authenticated())
         .sessionManagement(session -> 
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

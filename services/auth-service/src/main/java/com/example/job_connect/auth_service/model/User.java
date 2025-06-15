@@ -1,5 +1,7 @@
 package com.example.job_connect.auth_service.model;
 
+import java.util.function.Consumer;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -50,8 +52,8 @@ public class User {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String string) {
+		this.password = string;
 	}
 
 	public String getRole() {

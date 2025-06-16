@@ -24,8 +24,7 @@ public class AuthService {
 	
 	public Optional<User> getUserByUsername(String username) {
 		return Optional.ofNullable(userRepository.findByUsername(username)
-				.orElseThrow(()-> new UsernameNotFoundException("User not found") ));
-				
+				.orElseThrow(()-> new UsernameNotFoundException("User not found") ));		
 	}
 	
 	
@@ -38,6 +37,19 @@ public class AuthService {
         } else {
             throw new BadCredentialsException("Invalid Credentials");
         }
+	}
+	
+	
+	public String registerUser(User user) {
+		if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+			throw new IllegalArgumentException("Username already exists");
+		}
+		else{
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			userRepository.save(user);
+			return "User Successfully registered";		
+		}
+
 	}
 	
 	

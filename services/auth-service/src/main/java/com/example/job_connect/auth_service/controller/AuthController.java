@@ -35,11 +35,17 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-    	
-        user.setPassword(passwordEncoder.encode((CharSequence) user.getPassword()));
-    	System.out.println("User registration implemented");
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+    	try {
+    		String response = authService.registerUser(user);
+    		return ResponseEntity.ok(response);
+    	}
+    	catch(IllegalArgumentException ex) {
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    	}
+    	catch(Exception ex) {
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registration failed");
+    	}
+    	 
     }
 
 	@PostMapping("/login")

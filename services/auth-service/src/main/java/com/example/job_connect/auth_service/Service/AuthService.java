@@ -32,7 +32,7 @@ public class AuthService {
 		
 		if (passwordEncoder.matches(requestPassword, user.get().getPassword()))
 		{
-            String token = JwtUtility.generateToken(user.get().getUsername());
+            String token = JwtUtility.generateToken(user.get().getUsername(), user.get().getRole());
             return token;
         } else {
             throw new BadCredentialsException("Invalid Credentials");
